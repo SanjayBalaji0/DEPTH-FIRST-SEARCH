@@ -73,7 +73,7 @@ Now, Queue becomes empty, So, terminate these process of iteration.
 ```py
 from collections import deque, defaultdict
 
-def dfs(graph, start, visited, path):
+def bfs(graph, start, visited, path):
     queue = deque([start])
     visited[start] = True
     path.append(start)
@@ -98,7 +98,7 @@ for _ in range(e):
 if graph:
     start = '0' if '0' in graph else next(iter(graph))  # Pick any node if '0' is absent
     visited = defaultdict(bool)
-    traversed_path = dfs(graph, start, visited, [])
+    traversed_path = bfs(graph, start, visited, [])
     print(traversed_path)
 else:
     print("Graph is empty!")
