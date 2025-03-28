@@ -71,37 +71,38 @@ Now, Queue becomes empty, So, terminate these process of iteration.
 <h3> PROGRAM:</h3>
 
 ```py
-from collections import deque
-from collections import defaultdict
-def bfs(graph,start,visited,path):
-    queue = deque()
-    path.append(start)
-    queue.append(start)
+from collections import deque, defaultdict
+
+def dfs(graph, start, visited, path):
+    queue = deque([start])
     visited[start] = True
-    while len(queue) != 0:
-        tmpnode = queue.popleft()
-        for neighbour in graph[tmpnode]:
-            if visited[neighbour] == False:
-                path.append(neighbour)
-                queue.append(neighbour)
-                visited[neighbour] = True
+    path.append(start)
+
+    while queue:
+        node = queue.popleft()
+        for neighbor in graph[node]:
+            if not visited[neighbor]:
+                queue.append(neighbor)
+                visited[neighbor] = True
+                path.append(neighbor)
     return path
 
 graph = defaultdict(list)
-v,e = map(int,input().split())
-for i in range(e):
-    u,v = map(str,input().split())
-    graph[u].append(v)
-    graph[v].append(u)
+v, e = map(int, input().split())
 
-if '0' in graph:
-    start = '0'
+for _ in range(e):
+    u, v = input().split()
+    graph[u].append(v)
+    graph[v].append(u)  # Since it's an undirected graph
+
+if graph:
+    start = '0' if '0' in graph else next(iter(graph))  # Pick any node if '0' is absent
+    visited = defaultdict(bool)
+    traversed_path = dfs(graph, start, visited, [])
+    print(traversed_path)
 else:
-    start = 'A'
-path = []
-visited = defaultdict(bool)
-traversedpath = bfs(graph,start,visited,path)
-print(traversedpath)
+    print("Graph is empty!")
+
 ```
 
 <hr>
